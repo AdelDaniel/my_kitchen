@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-# ** my_kitchen **
-=======
-# **my_kitchen**
->>>>>>> bf30775dfd686823831bbeaf9edee13456c2392b
 
+# **my_kitchen**
+=======
 A Flutter project To Show different Categories of Meals and how to cook the meal with steps and recipes
 
 ## Meals Screen
@@ -13,4 +10,4 @@ A Flutter project To Show different Categories of Meals and how to cook the meal
 <img src="screenShots/8b92eda1-d54e-416b-9308-177e8af5fa34.jpg" height="300em"><img src="screenShots/c8d8c2b0-81c1-44dc-b8de-722c2be31485.jpg" height="300em">
 <img src="screenShots/dd338f61-aedc-48e6-a0e1-ac1bf2622f55.jpg" height="300em">
 <img src="screenShots/e89431e7-ffc3-40fb-b5a7-96486dc82757.jpg" height="300em">
---
+-->
