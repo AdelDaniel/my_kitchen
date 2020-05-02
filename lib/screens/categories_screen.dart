@@ -11,6 +11,8 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print( 'h=' +  MediaQuery.of(context).size.height.toString() );
+    print( 'w=' +  MediaQuery.of(context).size.width.toString()  );
     return Scaffold(
           body: GridView(
         children: DUMMY_CATEGORIES.map(
@@ -19,7 +21,7 @@ class CategoryScreen extends StatelessWidget {
           }
         ).toList(),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200 ,
+          maxCrossAxisExtent: 500 ,
           childAspectRatio: 3/2 ,
           crossAxisSpacing: 1,
           mainAxisSpacing: 20 ,
