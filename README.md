@@ -1,16 +1,16 @@
+<<<<<<< HEAD
 # ** my_kitchen **
+=======
+# **my_kitchen**
+>>>>>>> bf30775dfd686823831bbeaf9edee13456c2392b
 
 A Flutter project To Show different Categories of Meals and how to cook the meal with steps and recipes
 
-## Getting Started
+## Meals Screen
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img src="screenShots/191c30fe-f516-452c-9262-84110cb715df.jpg" height="500em">    <img src="screenShots/22ecd999-d245-4c90-bd1b-c4c7da728fe4.jpg" height="500em">    <img src="screenShots/817d749c-ff95-4517-b41e-8c0631f79862.jpg" height="500em">
+<!--
+<img src="screenShots/8b92eda1-d54e-416b-9308-177e8af5fa34.jpg" height="300em"><img src="screenShots/c8d8c2b0-81c1-44dc-b8de-722c2be31485.jpg" height="300em">
+<img src="screenShots/dd338f61-aedc-48e6-a0e1-ac1bf2622f55.jpg" height="300em">
+<img src="screenShots/e89431e7-ffc3-40fb-b5a7-96486dc82757.jpg" height="300em">
+--
