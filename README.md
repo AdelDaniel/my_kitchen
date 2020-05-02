@@ -1,6 +1,6 @@
-# my_kitchen
+# ** my_kitchen **
 
-A Flutter project.
+A Flutter project To Show different Categories of Meals and how to cook the meal with steps and recipes
 
 ## Getting Started
 
