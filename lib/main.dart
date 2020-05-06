@@ -20,7 +20,31 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
+
+
 List<Meal> _availableMeals = DUMMY_MEALS ;
+List<Meal> starMeals = [] ;
+
+
+  IconData _addOrRemoveStar(String staredMealId ,bool checkIconOnly ){
+    final int currentMealIndex = starMeals.indexWhere((meal) { return meal.id == staredMealId;});
+    print(currentMealIndex);
+    if(currentMealIndex >=0 )
+    {
+      if(checkIconOnly) return Icons.star; 
+      setState(() {
+      starMeals.removeAt(currentMealIndex);
+      });
+      return Icons.star_border ;
+    }else {
+        if(checkIconOnly) return Icons.star_border ;
+        setState(() {
+        starMeals.add(DUMMY_MEALS.firstWhere((meal)=> meal.id == staredMealId));
+        });
+      return Icons.star ;  
+    }
+  }
+
   static const String _glutenFree = 'Gluten Free';
   static const String _vegetarian = 'Vegetarian';
   static const String _vegan = 'Vegan';
@@ -33,7 +57,7 @@ List<Meal> _availableMeals = DUMMY_MEALS ;
     _lactoseFree: false, 
   };
   
-  void _SetFiltters(Map<String,bool> filtterData){
+  void _setFiltters(Map<String,bool> filtterData){
     //filtteredMeals.clear();
         setState(() {
       _selections = filtterData;
@@ -90,11 +114,11 @@ List<Meal> _availableMeals = DUMMY_MEALS ;
      // home: TabsScreen() ,
       initialRoute: '/',
       routes: {
-        '/' :  (context) => MainTabsScreen() ,
+        '/' :  (context) => MainTabsScreen(starMeals) ,
         CategoryScreen.id : (context) => CategoryScreen() ,
         MealScreen.id : (context) => MealScreen(_availableMeals) ,
-        MealDetail.id : (context) => MealDetail() ,
-        FiltterScreen.route :(context) => FiltterScreen(_SetFiltters) ,
+        MealDetail.id : (context) => MealDetail(_addOrRemoveStar) ,
+        FiltterScreen.route :(context) => FiltterScreen(_setFiltters) ,
       },
     );
   }

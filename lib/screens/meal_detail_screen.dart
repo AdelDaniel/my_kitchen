@@ -1,19 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:animated_floatactionbuttons/animated_floatactionbuttons.dart';
+import 'package:flutter/services.dart';
 
 import '../models/3.2 dummy_data.dart.dart';
 import '../models/meal_model.dart';
 
-class MealDetail extends StatelessWidget {
+class MealDetail extends StatefulWidget {
   static const String id = "/MealDetail";
 
+  final Function _addOrRemoveStar ;
+  MealDetail(this._addOrRemoveStar);
+
   @override
-  Widget build(BuildContext context) {
+  _MealDetailState createState() => _MealDetailState();
+}
+
+class _MealDetailState extends State<MealDetail> {
+
+     Meal currentMeal ;
+     IconData stardMealOrnot  ;
+
+     List<Widget> _buildFloatingButtons() {
+       return <Widget>[
+      FloatingActionButton(
+        heroTag: "Copy Meal",
+        child: Icon(Icons.content_copy),
+        tooltip: 'Copy code link to clipboard',
+        onPressed: () async {
+          await Clipboard.setData(ClipboardData( 
+            text:'''${currentMeal.title} ,
+            \n\n  Ingredients \n ${currentMeal.ingredients} 
+            \n\n  Steps \n    ${currentMeal.steps} ''')); 
+            
+            // Scaffold.of(context).showSnackBar(SnackBar(
+            // content: Text('Meal copied to Clipboard!'), ));
+        },
+      ),
+      FloatingActionButton(
+        heroTag: "Star",
+        child:  Icon(stardMealOrnot),
+        tooltip: 'Star',
+        onPressed: () {
+          setState(() {
+          stardMealOrnot = widget._addOrRemoveStar(currentMeal.id ,false ); 
+          print(stardMealOrnot)   ;            
+          });
+        },
+      ),
+  ];
+}
+
+  @override
+  Widget build(BuildContext context) {    
     final md = MediaQuery.of(context).size;
     final String mealId = ModalRoute.of(context).settings.arguments as String;
-    final Meal currentMeal = DUMMY_MEALS.firstWhere((meal) {
+    currentMeal = DUMMY_MEALS.firstWhere((meal) {
       return meal.id.contains(mealId);
     });
 
+
+    setState(() {
+      stardMealOrnot = widget._addOrRemoveStar(currentMeal.id ,true );   
+      print(stardMealOrnot)   ;      
+   });
+          
     return Scaffold(
       body: Container(
         height: md.height,
@@ -205,10 +255,13 @@ class MealDetail extends StatelessWidget {
         ),
       ),
 
-      floatingActionButton: FloatingActionButton(
+            floatingActionButton: AnimatedFloatingActionButton(
 
-        onPressed: (){ },
-      ),
+              fabButtons: _buildFloatingButtons(),
+              colorStartAnimation: Colors.indigo,
+              colorEndAnimation: Colors.red,
+              animatedIconData: AnimatedIcons.menu_close,
+            ),
     );
   }
 }

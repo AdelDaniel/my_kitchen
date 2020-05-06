@@ -1,28 +1,40 @@
 import 'package:flutter/material.dart';
 
+import '../models/meal_model.dart';
 import '../widgets/drawer.dart';
 import './categories_screen.dart';
 import './star_meal_screen.dart';
 
 class MainTabsScreen extends StatefulWidget {
+  final List<Meal> starMeals ;
+  MainTabsScreen(this.starMeals);
+
   @override
   _MainTabsScreenState createState() => _MainTabsScreenState();
 }
 
+
 class _MainTabsScreenState extends State<MainTabsScreen> {
 
-  final List<Widget>  _pages = [
-    CategoryScreen(),
-    StarMealsScreen(),
-  ];
-
+  List<Widget>  _pages ;
   int choosePage = 0 ;
   void _selectedTap(int value) {
-
     setState(() {
       choosePage = value ; 
     });
   }
+
+  @override
+  void initState() {
+    
+    _pages = [
+    CategoryScreen(),
+    StarMealsScreen(widget.starMeals),
+  ];
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
