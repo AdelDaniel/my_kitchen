@@ -1,37 +1,44 @@
 
 import 'package:flutter/material.dart';
 
-import '../models/3.2%20dummy_data.dart.dart';
-import '../models/category.dart';
-import '../widgets/meal_item.dart';
 
-class MealScreen extends StatelessWidget {
+
+import '../widgets/meal_item.dart';
+import '../models/meal_model.dart';
+
+class MealScreen extends StatefulWidget {
 
   static const String id = 'MealScreen' ; 
   
-  // final Category currentCategory ;
-  // const MealScreen( this.currentCategory );
+   
 
-  
+    final List<Meal> avalibleMeals ;
+    const MealScreen(this.avalibleMeals);
+
+  @override
+  _MealScreenState createState() => _MealScreenState();
+}
+
+class _MealScreenState extends State<MealScreen> {
   @override
   Widget build(BuildContext context) {
-    final currentCategory = ModalRoute.of(context).settings.arguments as Category ; 
-    final categoryMeal = DUMMY_MEALS.where((meal){
-      return meal.categories.contains(currentCategory.id)  ; 
+    final Map<String , Object> currentCategory = ModalRoute.of(context).settings.arguments as Map<String , Object>  ; 
+    final categoryMeal = widget.avalibleMeals.where((meal){
+      return meal.categories.contains(currentCategory['id'])  ; 
     }).toList();
 
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: currentCategory.color,
-        title: Text( currentCategory.title),
+        backgroundColor: currentCategory['color'],
+        title: Text( currentCategory['title']),
       ),
       body: GridView.builder(
         itemCount: categoryMeal.length,
         itemBuilder: (ctx ,index)
         {
           return MealItem(categoryMeal[index]);
-        } ,
+        },
        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 400 ,
           childAspectRatio: 2/1 ,

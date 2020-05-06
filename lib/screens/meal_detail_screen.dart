@@ -32,12 +32,12 @@ class MealDetail extends StatelessWidget {
                   bottomLeft: Radius.circular(50),
                   bottomRight: Radius.circular(50)),
               child: Container(
-                height: md.height * 20 / 100,
+                height: md.height * 25 / 100,
                 width: double.infinity,
                 alignment: Alignment.bottomCenter,
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.black, width: 3),
-                    color: Colors.green,
+                    //color: Colors.green,
                     //border: Border.all(width: 10),
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(50),
@@ -59,7 +59,7 @@ class MealDetail extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: md.height * 0.15,
+                      height: md.height * 0.20,
                     ),
                     Stack(
                       alignment: Alignment.center,
@@ -88,32 +88,32 @@ class MealDetail extends StatelessWidget {
 
             
             /////////////////////////// Ingradients  ////////////////////////////////////////
-            Container(
-              alignment: Alignment.centerRight,
-              child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.values = [CrossAxisAlignment.start , CrossAxisAlignment.end ,],
-                children: <Widget>[
-                  SizedBox(
-                    height: md.height * 0.2 + 30,
-                  ),
-                  ClipRRect(
+            
+              //crossAxisAlignment: CrossAxisAlignment.values = [CrossAxisAlignment.start , CrossAxisAlignment.end ,],
+              
+                Align(
+                  alignment: Alignment.topRight,
+                 child: ClipRRect(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(80),
-                        bottomLeft: Radius.circular(50)),
+                        bottomLeft: Radius.circular(80)),
                     child: Container(
+                      margin: EdgeInsets.only(top: md.height * 0.28, ),
+                      alignment: Alignment.centerRight,
                       width: 200,
+                      height: 205,
                       decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 5,
-                              color: Colors.grey,
-                              offset: Offset(1, 5),
-                              spreadRadius: 5)
-                        ],
+                        // boxShadow: [
+                        //   BoxShadow(
+                        //       blurRadius: 1,
+                        //       color: Colors.black,
+                        //       offset: Offset(0, 0),
+                        //       spreadRadius: 5)
+                        // ],
 
                         color: Colors.white,
-                        //border: Border.all(width: 10),
-                        // borderRadius: BorderRadius.only(topLeft: Radius.circular(80),bottomLeft: Radius.circular(80)),
+                        //border: Border.all(color:Colors.black12 ,width :3),
+                         borderRadius: BorderRadius.only(topLeft: Radius.circular(80),bottomLeft: Radius.circular(80)),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,8 +124,8 @@ class MealDetail extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 30),
 
                             // color: Colors.white,
-                            height: 200,
-                            //width: 250,
+                            height: 160,
+                            width: 205,
                             child: ListView.builder(
                                 itemCount: currentMeal.ingredients.length,
                                 itemBuilder: (ctx, index) {
@@ -136,9 +136,8 @@ class MealDetail extends StatelessWidget {
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
+                ),
+ 
 
             ///////////////////////////STEPS ////////////////////////////////////////
             Padding(
@@ -147,7 +146,7 @@ class MealDetail extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(80),
+                      topRight: Radius.circular(100),
                       bottomRight: Radius.circular(80)),
                   child: Container(
                     padding: const EdgeInsets.only(left: 10),
@@ -204,6 +203,11 @@ class MealDetail extends StatelessWidget {
            
           ],
         ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+
+        onPressed: (){ },
       ),
     );
   }

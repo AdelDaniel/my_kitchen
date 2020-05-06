@@ -17,7 +17,7 @@ final Category cat ;
 
   void selectCategory(BuildContext ctx){
     Navigator.of(ctx).pushNamed(
-      MealScreen.id , arguments: cat ,
+      MealScreen.id , arguments: { 'id' : cat.id , 'color' :cat.color , 'title':cat.title  },
     );
 
   }
