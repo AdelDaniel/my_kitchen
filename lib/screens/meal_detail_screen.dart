@@ -8,7 +8,7 @@ import '../models/meal_model.dart';
 class MealDetail extends StatefulWidget {
   static const String id = "/MealDetail";
 
-  final Function _addOrRemoveStar ;
+  final Function _addOrRemoveStar;
   MealDetail(this._addOrRemoveStar);
 
   @override
@@ -16,64 +16,64 @@ class MealDetail extends StatefulWidget {
 }
 
 class _MealDetailState extends State<MealDetail> {
+  Meal currentMeal;
+  IconData stardMealOrnot;
 
-     Meal currentMeal ;
-     IconData stardMealOrnot  ;
-
-     List<Widget> _buildFloatingButtons() {
-       return <Widget>[
+  List<Widget> _buildFloatingButtons() {
+    return <Widget>[
       FloatingActionButton(
         heroTag: "Copy Meal",
         child: Icon(Icons.content_copy),
         tooltip: 'Copy code link to clipboard',
         onPressed: () async {
-          await Clipboard.setData(ClipboardData( 
-            text:'''${currentMeal.title} ,
+          await Clipboard.setData(ClipboardData(text: '''${currentMeal.title} ,
             \n\n  Ingredients \n ${currentMeal.ingredients} 
-            \n\n  Steps \n    ${currentMeal.steps} ''')); 
-            
-            // Scaffold.of(context).showSnackBar(SnackBar(
-            // content: Text('Meal copied to Clipboard!'), ));
+            \n\n  Steps \n    ${currentMeal.steps} '''));
+
+          // Scaffold.of(context).showSnackBar(SnackBar(
+          // content: Text('Meal copied to Clipboard!'), ));
         },
       ),
       FloatingActionButton(
         heroTag: "Star",
-        child:  Icon(stardMealOrnot),
+        child: Icon(stardMealOrnot),
         tooltip: 'Star',
         onPressed: () {
           setState(() {
-          stardMealOrnot = widget._addOrRemoveStar(currentMeal.id ,false ); 
-          print(stardMealOrnot)   ;            
+            stardMealOrnot = widget._addOrRemoveStar(currentMeal.id, false);
+            print(stardMealOrnot);
           });
         },
       ),
-  ];
-}
+    ];
+  }
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     final md = MediaQuery.of(context).size;
     final String mealId = ModalRoute.of(context).settings.arguments as String;
     currentMeal = DUMMY_MEALS.firstWhere((meal) {
       return meal.id.contains(mealId);
     });
 
-
     setState(() {
-      stardMealOrnot = widget._addOrRemoveStar(currentMeal.id ,true );   
-      print(stardMealOrnot)   ;      
-   });
-          
+      stardMealOrnot = widget._addOrRemoveStar(currentMeal.id, true);
+      print(stardMealOrnot);
+    });
+
     return Scaffold(
       body: Container(
         height: md.height,
         decoration: BoxDecoration(
             image: DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(
-            currentMeal.imageUrl,
-            //'assets/images/Suggestions+for+the+Best+Italian+Dishes+Kids.png',
-          ),
+          image: currentMeal.imageUrl != null
+              ? NetworkImage(
+                  currentMeal.imageUrl,
+                )
+              : AssetImage(
+                  'assets/images/Suggestions+for+the+Best+Italian+Dishes+Kids.png',
+                ),
         )),
         child: Stack(
           children: <Widget>[
@@ -94,14 +94,16 @@ class _MealDetailState extends State<MealDetail> {
                         bottomRight: Radius.circular(50)),
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(
-                        currentMeal.imageUrl,
-                        //'assets/images/Suggestions+for+the+Best+Italian+Dishes+Kids.png',
-                      ),
+                      image: currentMeal.imageUrl != null
+                          ? NetworkImage(
+                              currentMeal.imageUrl,
+                            )
+                          : AssetImage(
+                              'assets/images/Suggestions+for+the+Best+Italian+Dishes+Kids.png',
+                            ),
                     )),
               ),
             ),
-
 
             /// Name Of The Meal /////////////////////////////////////////////////////////
             Align(
@@ -135,59 +137,60 @@ class _MealDetailState extends State<MealDetail> {
                   ],
                 )),
 
-
-            
             /////////////////////////// Ingradients  ////////////////////////////////////////
-            
-              //crossAxisAlignment: CrossAxisAlignment.values = [CrossAxisAlignment.start , CrossAxisAlignment.end ,],
-              
-                Align(
-                  alignment: Alignment.topRight,
-                 child: ClipRRect(
+
+            //crossAxisAlignment: CrossAxisAlignment.values = [CrossAxisAlignment.start , CrossAxisAlignment.end ,],
+
+            Align(
+              alignment: Alignment.topRight,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(80),
+                    bottomLeft: Radius.circular(80)),
+                child: Container(
+                  margin: EdgeInsets.only(
+                    top: md.height * 0.28,
+                  ),
+                  alignment: Alignment.centerRight,
+                  width: 200,
+                  height: 205,
+                  decoration: BoxDecoration(
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //       blurRadius: 1,
+                    //       color: Colors.black,
+                    //       offset: Offset(0, 0),
+                    //       spreadRadius: 5)
+                    // ],
+
+                    color: Colors.white,
+                    //border: Border.all(color:Colors.black12 ,width :3),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(80),
                         bottomLeft: Radius.circular(80)),
-                    child: Container(
-                      margin: EdgeInsets.only(top: md.height * 0.28, ),
-                      alignment: Alignment.centerRight,
-                      width: 200,
-                      height: 205,
-                      decoration: BoxDecoration(
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //       blurRadius: 1,
-                        //       color: Colors.black,
-                        //       offset: Offset(0, 0),
-                        //       spreadRadius: 5)
-                        // ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text('Ingradients',
+                          style: Theme.of(context).textTheme.title),
+                      Container(
+                        padding: const EdgeInsets.only(left: 30),
 
-                        color: Colors.white,
-                        //border: Border.all(color:Colors.black12 ,width :3),
-                         borderRadius: BorderRadius.only(topLeft: Radius.circular(80),bottomLeft: Radius.circular(80)),
+                        // color: Colors.white,
+                        height: 160,
+                        width: 205,
+                        child: ListView.builder(
+                            itemCount: currentMeal.ingredients.length,
+                            itemBuilder: (ctx, index) {
+                              return Text(currentMeal.ingredients[index]);
+                            }),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text('Ingradients',
-                              style: Theme.of(context).textTheme.title),
-                          Container(
-                            padding: const EdgeInsets.only(left: 30),
-
-                            // color: Colors.white,
-                            height: 160,
-                            width: 205,
-                            child: ListView.builder(
-                                itemCount: currentMeal.ingredients.length,
-                                itemBuilder: (ctx, index) {
-                                  return Text(currentMeal.ingredients[index]);
-                                }),
-                          ),
-                        ],
-                      ),
-                    ),
+                    ],
                   ),
                 ),
- 
+              ),
+            ),
 
             ///////////////////////////STEPS ////////////////////////////////////////
             Padding(
@@ -249,19 +252,15 @@ class _MealDetailState extends State<MealDetail> {
                 ),
               ),
             ),
-
-           
           ],
         ),
       ),
-
-            floatingActionButton: AnimatedFloatingActionButton(
-
-              fabButtons: _buildFloatingButtons(),
-              colorStartAnimation: Colors.indigo,
-              colorEndAnimation: Colors.red,
-              animatedIconData: AnimatedIcons.menu_close,
-            ),
+      floatingActionButton: AnimatedFloatingActionButton(
+        fabButtons: _buildFloatingButtons(),
+        colorStartAnimation: Colors.indigo,
+        colorEndAnimation: Colors.red,
+        animatedIconData: AnimatedIcons.menu_close,
+      ),
     );
   }
 }

@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 import '../screens/meal_detail_screen.dart';
 import '../models/meal_model.dart';
@@ -11,7 +9,8 @@ class MealItem extends StatelessWidget {
 
   void selectedMeal(ctx) {
     Navigator.of(ctx).pushNamed(
-      MealDetail.id , arguments: meal.id ,
+      MealDetail.id,
+      arguments: meal.id,
     );
   }
 
@@ -52,9 +51,7 @@ class MealItem extends StatelessWidget {
         child: Container(
           child: Stack(
             children: <Widget>[
-
-
-              // image Of Meal 
+              // image Of Meal
               Positioned.fill(
                 child: Container(
                   height: 160,
@@ -62,16 +59,19 @@ class MealItem extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.fitWidth,
-                      image: AssetImage(
-                        'assets/images/Suggestions+for+the+Best+Italian+Dishes+Kids.png',
-                      ),
+                      image: meal.imageUrl != null
+                          ? NetworkImage(
+                              meal.imageUrl,
+                            )
+                          : AssetImage(
+                              'assets/images/Suggestions+for+the+Best+Italian+Dishes+Kids.png',
+                            ),
                     ),
                   ),
                 ),
               ),
 
-
-              // meal title 
+              // meal title
               Positioned(
                 bottom: 30,
                 //height: 80 ,
@@ -99,7 +99,6 @@ class MealItem extends StatelessWidget {
                   ),
                 ),
               ),
-
 
               // meal basic info [time and complexity and affordability ]
               Positioned(
