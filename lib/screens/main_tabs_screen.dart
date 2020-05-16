@@ -6,9 +6,6 @@ import './categories_screen.dart';
 import './star_meal_screen.dart';
 
 class MainTabsScreen extends StatefulWidget {
-  final List<Meal> starMeals ;
-  MainTabsScreen(this.starMeals);
-
   @override
   _MainTabsScreenState createState() => _MainTabsScreenState();
 }
@@ -23,13 +20,12 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
       choosePage = value ; 
     });
   }
-
   @override
   void initState() {
     
     _pages = [
     CategoryScreen(),
-    StarMealsScreen(widget.starMeals),
+    StarMealsScreen(), //StarMealsScreen(widget.starMeals),
   ];
     super.initState();
   }

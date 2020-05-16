@@ -5,19 +5,24 @@ import 'package:flutter/services.dart';
 import '../models/3.2 dummy_data.dart.dart';
 import '../models/meal_model.dart';
 
-class MealDetail extends StatefulWidget {
+
+/// provider >>
+import 'package:provider/provider.dart';
+import '../provider/star_provider.dart';
+
+class MealDetail extends StatelessWidget {
   static const String id = "/MealDetail";
 
-  final Function _addOrRemoveStar;
-  MealDetail(this._addOrRemoveStar);
+//   // final Function _addOrRemoveStar;
+//   // MealDetail(this._addOrRemoveStar);
 
-  @override
-  _MealDetailState createState() => _MealDetailState();
-}
+//   @override
+//   _MealDetailState createState() => _MealDetailState();
+// }
 
-class _MealDetailState extends State<MealDetail> {
+// class _MealDetailState extends State<MealDetail> {
   Meal currentMeal;
-  IconData stardMealOrnot;
+  bool stardMealOrnot;
 
   List<Widget> _buildFloatingButtons() {
     return <Widget>[
@@ -25,8 +30,8 @@ class _MealDetailState extends State<MealDetail> {
         heroTag: "Copy Meal",
         child: Icon(Icons.content_copy),
         tooltip: 'Copy code link to clipboard',
-        onPressed: () async {
-          await Clipboard.setData(ClipboardData(text: '''${currentMeal.title} ,
+        onPressed: ()  {
+           Clipboard.setData(ClipboardData(text: '''${currentMeal.title} ,
             \n\n  Ingredients \n ${currentMeal.ingredients} 
             \n\n  Steps \n    ${currentMeal.steps} '''));
 
@@ -34,16 +39,19 @@ class _MealDetailState extends State<MealDetail> {
           // content: Text('Meal copied to Clipboard!'), ));
         },
       ),
-      FloatingActionButton(
-        heroTag: "Star",
-        child: Icon(stardMealOrnot),
-        tooltip: 'Star',
-        onPressed: () {
-          setState(() {
-            stardMealOrnot = widget._addOrRemoveStar(currentMeal.id, false);
-            print(stardMealOrnot);
-          });
-        },
+      Consumer<StarMeals>(
+        builder: (_,starMeal,child)=>FloatingActionButton(
+          heroTag: "Star",
+          child: Icon(starMeal.checkStaredMeal(currentMeal.id) ? Icons.star : Icons.star_border  ),
+          tooltip: 'Star',
+          onPressed: () {
+            starMeal.addOrRemoveStar(currentMeal.id);
+            // setState(() {
+            //   stardMealOrnot = widget._addOrRemoveStar(currentMeal.id, false);
+            //   print(stardMealOrnot);
+            // });
+          },
+        ),
       ),
     ];
   }
@@ -56,10 +64,11 @@ class _MealDetailState extends State<MealDetail> {
       return meal.id.contains(mealId);
     });
 
-    setState(() {
-      stardMealOrnot = widget._addOrRemoveStar(currentMeal.id, true);
-      print(stardMealOrnot);
-    });
+    
+    // setState(() {
+    //   stardMealOrnot = widget._addOrRemoveStar(currentMeal.id, true);
+    //   print(stardMealOrnot);
+    // });
 
     return Scaffold(
       body: Container(

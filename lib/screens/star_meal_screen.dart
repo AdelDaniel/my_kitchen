@@ -5,13 +5,20 @@ import '../widgets/meal_item.dart';
 import '../models/meal_model.dart';
 
 
+///PROVIDRRS 
+import 'package:provider/provider.dart';
+import '../provider/star_provider.dart';
+
 class StarMealsScreen extends StatelessWidget {
 
-  final List<Meal> starMeals ;
-  StarMealsScreen(this.starMeals);
+  // final List<Meal> starMeals ;
+  // StarMealsScreen(this.starMeals);
   
   @override
   Widget build(BuildContext context) {
+
+    final StarMeals starMealsProvider = Provider.of<StarMeals>(context);
+    final List<Meal> starMeals =starMealsProvider.getStarMeals ;
     if(starMeals.isEmpty){
       return Center(child : Text('NO Stared Meals'),) ;
     }else{

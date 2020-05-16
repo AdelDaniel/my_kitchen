@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 
-import '../screens/meal_screen.dart';
+import '../screens/meals_screen.dart';
 import '../models/category.dart';
 
 
@@ -17,7 +17,7 @@ final Category cat ;
 
   void selectCategory(BuildContext ctx){
     Navigator.of(ctx).pushNamed(
-      MealScreen.id , arguments: { 'id' : cat.id , 'color' :cat.color , 'title':cat.title  },
+      MealsScreen.id , arguments: { 'id' : cat.id , 'color' :cat.color , 'title':cat.title  },
     );
 
   }

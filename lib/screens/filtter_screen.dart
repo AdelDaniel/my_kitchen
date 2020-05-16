@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+
 
 import '../widgets/drawer.dart';
+import '../provider/filter_provider.dart';
+
 
 class FiltterScreen extends StatefulWidget {
 static const route = 'Filtter Screen';
 
-//final Map<String,bool> _selectionsFromMain ;
-final Function saveFiltters;
-FiltterScreen(this.saveFiltters); //this._selectionsFromMain
+// //final Map<String,bool> _selectionsFromMain ;
+// final Function saveFiltters;
+// FiltterScreen(this.saveFiltters); //this._selectionsFromMain
 
   @override
   _FiltterScreenState createState() => _FiltterScreenState();
 }
 
-class _FiltterScreenState extends State<FiltterScreen> {
+ class _FiltterScreenState extends State<FiltterScreen> {
   
-  static const String _glutenFree = 'Gluten Free';
-  static const String _vegetarian = 'Vegetarian';
-  static const String _vegan = 'Vegan';
-  static const String _lactoseFree = 'Lactose Free';
 
-  Map<String,bool> _selections={
-    _glutenFree :  false,
-    _vegetarian :  false,
-    _vegan :       false,
-    _lactoseFree:  false, 
-  };
+  // Map<String,bool> _selections={
+  //   FilterProvider.glutenFree :  false,
+  //   FilterProvider.vegetarian :  false,
+  //   FilterProvider.vegan :       false,
+  //   FilterProvider.lactoseFree:  false, 
+  // };
 
   // @override
   // void initState() {
@@ -40,15 +40,25 @@ class _FiltterScreenState extends State<FiltterScreen> {
   @override
   Widget build(BuildContext context) {
 
+  // FilterProvider filterProvider = Provider.of<FilterProvider>(context , listen: false );
+  Map<String,bool>  _selections = FilterProvider.selections;
+   //  Map<String,bool>  _selections = _previousSelections; 
+
+
+  bool x = true ; 
   Widget seclectingWidget (String selecting){
     return Material(
           color: Colors.transparent,
           child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(4.0)),
             onTap: () {
-              setState(() {
-                _selections[selecting] =(!_selections[selecting]) ;
-              });
+               setState(() {
+                 print('cupertino preesed' + _selections[selecting].toString());
+              _selections[selecting] =(!_selections[selecting]) ;
+               });
+              // setState(() {
+              //   _selections[selecting] =(!_selections[selecting]) ;
+              // });
             },
             child: ListTile(
               title: Text(
@@ -56,12 +66,18 @@ class _FiltterScreenState extends State<FiltterScreen> {
                    style: TextStyle(color: Colors.black),
                    ) ,
                 trailing: CupertinoSwitch(
-                     value: _selections[selecting] ,
+                     value: _selections[selecting]  ,
                       onChanged: (bool value) {
-                        setState(() {
-                          _selections[selecting] =value ;
-                          print(_selections[selecting] ) ; 
-                        });
+                         
+                          setState(() {
+                            print('cupertino preesed' + value.toString() + _selections[selecting].toString());
+                        _selections[selecting] = !_selections[selecting]  ;
+                          x = !x ;
+                           });
+                        // setState(() {
+                        //   _selections[selecting] =value ;
+                        //   print(_selections[selecting] ) ; 
+                        // });
                       },
                     ),
             ),
@@ -70,7 +86,7 @@ class _FiltterScreenState extends State<FiltterScreen> {
   } 
 
 
-  Widget selctionMealsUI() {  
+  Widget selctionMealsUI() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,13 +110,11 @@ class _FiltterScreenState extends State<FiltterScreen> {
                 height: 25,
                 width: 95,
                   child: RaisedButton.icon( 
-                  
                   icon:Icon(Icons.save) , 
-                  onPressed: (){widget.saveFiltters(_selections); },
+                  onPressed: (){Provider.of<FilterProvider>(context , listen: false ).setSelections(_selections) ;},
                   label: Text('Save'),
                 ),
               ),
-
             ] 
           ),
         ),
@@ -108,10 +122,17 @@ class _FiltterScreenState extends State<FiltterScreen> {
           padding: const EdgeInsets.only(right: 16, left: 16),
           child: Column(
           children: <Widget>[
-            seclectingWidget(_vegan),
-            seclectingWidget(_glutenFree),
-            seclectingWidget(_lactoseFree),
-            seclectingWidget(_vegetarian),
+
+      //       for(String k in _selections.keys.toList() ){
+      //         seclectingWidget(k),
+      //       },
+
+            
+      //  _selections.forEach((k , v) => seclectingWidget(k)),
+            seclectingWidget(FilterProvider.glutenFree),
+            seclectingWidget(FilterProvider.vegetarian),
+            seclectingWidget(FilterProvider.vegan),
+            seclectingWidget(FilterProvider.lactoseFree),
           ],
             ),
         ),

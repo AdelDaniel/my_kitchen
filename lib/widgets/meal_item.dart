@@ -7,12 +7,6 @@ class MealItem extends StatelessWidget {
   final Meal meal;
   const MealItem(this.meal);
 
-  void selectedMeal(ctx) {
-    Navigator.of(ctx).pushNamed(
-      MealDetail.id,
-      arguments: meal.id,
-    );
-  }
 
   String get getComplexity {
     if (meal.complexity == Complexity.Simple)
@@ -38,6 +32,14 @@ class MealItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+  void selectedMeal(ctx) {
+    Navigator.of(ctx).pushNamed(
+      MealDetail.id,
+      arguments: meal.id,
+    );
+  }
+
     return InkWell(
       borderRadius: BorderRadius.circular(20.0),
       onTap: () => selectedMeal(context),
