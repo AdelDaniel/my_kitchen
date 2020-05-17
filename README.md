@@ -4,12 +4,12 @@
 A Flutter project To Show different Categories of Meals and how to cook the meal with steps and recipes
 
 ## Meal Screen
-<img src="screenShots/2020_05_17_16_55_40.gif" height="500em">
+<img src="screenShots/mealScreen.gif" height="500em">
 
 
 ## All Meal of A specific Category Screen
 
-<img src="screenShots/20200517_171459_edited.gif" height="500em">
+<img src="screenShots/category_sreen.gif" height="500em">
 
 <!--
 <img src="screenShots/191c30fe-f516-452c-9262-84110cb715df.jpg" height="500em">    <img src="screenShots/22ecd999-d245-4c90-bd1b-c4c7da728fe4.jpg" height="500em">    <img src="screenShots/817d749c-ff95-4517-b41e-8c0631f79862.jpg" height="500em">
