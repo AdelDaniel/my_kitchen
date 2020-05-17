@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../models/meal_model.dart';
 import '../widgets/drawer.dart';
 import './categories_screen.dart';
 import './star_meal_screen.dart';
+
 
 class MainTabsScreen extends StatefulWidget {
   @override
   _MainTabsScreenState createState() => _MainTabsScreenState();
 }
-
 
 class _MainTabsScreenState extends State<MainTabsScreen> {
 
@@ -22,7 +21,6 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
   }
   @override
   void initState() {
-    
     _pages = [
     CategoryScreen(),
     StarMealsScreen(), //StarMealsScreen(widget.starMeals),
@@ -35,9 +33,13 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[choosePage] ,
-      
+
+
       appBar: AppBar(title:choosePage == 0 ? Text(   'categories' ):Text ( 'Star' ,),),
       drawer: MyDrawer(),
+      
+
+      ///Bottom Navigtor
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectedTap ,
         elevation: 5,
@@ -88,10 +90,6 @@ class _MainTabsScreenState extends State<MainTabsScreen> {
 //           children: <Widget>[
 //           CategoryScreen(),
 //           StarMeals(),
-
-
-
 //         ],),
-//       ),
-      
+//       ),   
 //     );

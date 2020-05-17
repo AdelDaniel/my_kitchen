@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import '../models/3.2 dummy_data.dart.dart';
 import '../models/meal_model.dart';
 
-
 /// provider >>
 import 'package:provider/provider.dart';
 import '../provider/star_provider.dart';
@@ -21,17 +20,25 @@ class MealDetail extends StatelessWidget {
 // }
 
 // class _MealDetailState extends State<MealDetail> {
-  Meal currentMeal;
-  bool stardMealOrnot;
 
-  List<Widget> _buildFloatingButtons() {
+  @override
+  Widget build(BuildContext context) {
+       Meal currentMeal;
+       int i = 1;
+    final md = MediaQuery.of(context).size;
+    final String mealId = ModalRoute.of(context).settings.arguments as String;
+    currentMeal = DUMMY_MEALS.firstWhere((meal) {
+      return meal.id.contains(mealId);
+    });
+
+      List<Widget> _buildFloatingButtons() {
     return <Widget>[
       FloatingActionButton(
         heroTag: "Copy Meal",
         child: Icon(Icons.content_copy),
         tooltip: 'Copy code link to clipboard',
-        onPressed: ()  {
-           Clipboard.setData(ClipboardData(text: '''${currentMeal.title} ,
+        onPressed: () {
+          Clipboard.setData(ClipboardData(text: '''${currentMeal.title} ,
             \n\n  Ingredients \n ${currentMeal.ingredients} 
             \n\n  Steps \n    ${currentMeal.steps} '''));
 
@@ -40,36 +47,21 @@ class MealDetail extends StatelessWidget {
         },
       ),
       Consumer<StarMeals>(
-        builder: (_,starMeal,child)=>FloatingActionButton(
+        builder: (_, starMeal, child) => FloatingActionButton(
           heroTag: "Star",
-          child: Icon(starMeal.checkStaredMeal(currentMeal.id) ? Icons.star : Icons.star_border  ),
+          child: Icon(starMeal.checkStaredMeal(currentMeal.id)
+              ? Icons.star
+              : Icons.star_border),
           tooltip: 'Star',
           onPressed: () {
             starMeal.addOrRemoveStar(currentMeal.id);
-            // setState(() {
-            //   stardMealOrnot = widget._addOrRemoveStar(currentMeal.id, false);
-            //   print(stardMealOrnot);
-            // });
           },
         ),
       ),
     ];
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final md = MediaQuery.of(context).size;
-    final String mealId = ModalRoute.of(context).settings.arguments as String;
-    currentMeal = DUMMY_MEALS.firstWhere((meal) {
-      return meal.id.contains(mealId);
-    });
-
     
-    // setState(() {
-    //   stardMealOrnot = widget._addOrRemoveStar(currentMeal.id, true);
-    //   print(stardMealOrnot);
-    // });
-
     return Scaffold(
       body: Container(
         height: md.height,
@@ -202,61 +194,72 @@ class MealDetail extends StatelessWidget {
             ),
 
             ///////////////////////////STEPS ////////////////////////////////////////
-            Padding(
-              padding: const EdgeInsets.only(bottom: 0),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(100),
-                      bottomRight: Radius.circular(80)),
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 10),
-                    height: md.height * 0.45,
-                    width: md.width * 0.75,
-                    decoration: BoxDecoration(
-                      //  boxShadow:
-                      //  [BoxShadow(
-                      //    blurRadius: 5,
-                      //    color: Colors.black,
-                      //    offset: Offset(-5,5),
-                      //    spreadRadius: 5
-                      //  )],
-
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(80),
-                          bottomRight: Radius.circular(80)),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(80),
+                    bottomRight: Radius.circular(80)),
+                child: Container(
+                  padding: const EdgeInsets.only(left: 10),
+                  height: md.height * 0.45,
+                  width: md.width * 0.75,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.blueGrey,
+                      width: 2,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Steps',
-                          style: Theme.of(context).textTheme.title.copyWith(
-                              fontSize: 40, backgroundColor: Colors.white38),
-                        ),
-                        Container(
-                          alignment: Alignment.center,
-                          // color: Colors.white,
-                          height: md.height * 0.45 - 55,
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(80),
+                        bottomRight: Radius.circular(80)),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Steps',
+                        style: Theme.of(context).textTheme.title.copyWith(
+                            fontSize: 40, backgroundColor: Colors.white38),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        // color: Colors.white,
+                        height: md.height * 0.45 - 55,
 
-                          child: ListView.builder(
-                              itemCount: currentMeal.steps.length,
-                              itemBuilder: (ctx, index) {
-                                return ListTile(
-                                    leading: CircleAvatar(
-                                      child: Text((index + 1).toString()),
-                                    ),
-                                    title: Text(
-                                      currentMeal.steps[index],
-                                      style: TextStyle(
-                                          backgroundColor: Colors.white60),
-                                    ));
-                              }),
+                        child: ListWheelScrollView(
+                          useMagnifier: true,
+                          magnification: 1.1,
+                          clipToSize: true,
+                          itemExtent: 110, 
+                          children: currentMeal.steps.map((step) {
+                            return ListTile(
+                                leading: CircleAvatar(
+                                  child: Text((i++).toString()),
+                                ),
+                                title: Text(
+                                  step,
+                                  style: TextStyle(
+                                      backgroundColor: Colors.white60),
+                                ));
+                          }).toList(),
+
+                          // child: ListView.builder(
+                          //     itemCount: currentMeal.steps.length,
+                          //     itemBuilder: (ctx, index) {
+                          //       return ListTile(
+                          //           leading: CircleAvatar(
+                          //             child: Text((index + 1).toString()),
+                          //           ),
+                          //           title: Text(
+                          //             currentMeal.steps[index],
+                          //             style: TextStyle(
+                          //                 backgroundColor: Colors.white60),
+                          //           ));
+                          //     }),
                         ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               ),

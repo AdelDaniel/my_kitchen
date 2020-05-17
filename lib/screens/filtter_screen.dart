@@ -10,9 +10,6 @@ import '../provider/filter_provider.dart';
 class FiltterScreen extends StatefulWidget {
 static const route = 'Filtter Screen';
 
-// //final Map<String,bool> _selectionsFromMain ;
-// final Function saveFiltters;
-// FiltterScreen(this.saveFiltters); //this._selectionsFromMain
 
   @override
   _FiltterScreenState createState() => _FiltterScreenState();
@@ -21,31 +18,10 @@ static const route = 'Filtter Screen';
  class _FiltterScreenState extends State<FiltterScreen> {
   
 
-  // Map<String,bool> _selections={
-  //   FilterProvider.glutenFree :  false,
-  //   FilterProvider.vegetarian :  false,
-  //   FilterProvider.vegan :       false,
-  //   FilterProvider.lactoseFree:  false, 
-  // };
-
-  // @override
-  // void initState() {
-  //   // _selections[_glutenFree] = widget._selectionsFromMain[_glutenFree] ;
-  //   // _selections[_vegetarian] = widget._selectionsFromMain[_vegetarian] ;
-  //   // _selections[_vegan] = widget._selectionsFromMain[_vegan] ;
-  //   // _selections[_lactoseFree] = widget._selectionsFromMain[_lactoseFree] ;
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
+ Map<String,bool>  _selections = FilterProvider.selections;
 
-  // FilterProvider filterProvider = Provider.of<FilterProvider>(context , listen: false );
-  Map<String,bool>  _selections = FilterProvider.selections;
-   //  Map<String,bool>  _selections = _previousSelections; 
-
-
-  bool x = true ; 
   Widget seclectingWidget (String selecting){
     return Material(
           color: Colors.transparent,
@@ -53,12 +29,10 @@ static const route = 'Filtter Screen';
             borderRadius: const BorderRadius.all(Radius.circular(4.0)),
             onTap: () {
                setState(() {
-                 print('cupertino preesed' + _selections[selecting].toString());
+              //   print('cupertino preesed' + _selections[selecting].toString());
               _selections[selecting] =(!_selections[selecting]) ;
                });
-              // setState(() {
-              //   _selections[selecting] =(!_selections[selecting]) ;
-              // });
+
             },
             child: ListTile(
               title: Text(
@@ -70,14 +44,9 @@ static const route = 'Filtter Screen';
                       onChanged: (bool value) {
                          
                           setState(() {
-                            print('cupertino preesed' + value.toString() + _selections[selecting].toString());
+                         ///   print('cupertino preesed' + value.toString() + _selections[selecting].toString());
                         _selections[selecting] = !_selections[selecting]  ;
-                          x = !x ;
-                           });
-                        // setState(() {
-                        //   _selections[selecting] =value ;
-                        //   print(_selections[selecting] ) ; 
-                        // });
+                        });
                       },
                     ),
             ),
@@ -122,13 +91,6 @@ static const route = 'Filtter Screen';
           padding: const EdgeInsets.only(right: 16, left: 16),
           child: Column(
           children: <Widget>[
-
-      //       for(String k in _selections.keys.toList() ){
-      //         seclectingWidget(k),
-      //       },
-
-            
-      //  _selections.forEach((k , v) => seclectingWidget(k)),
             seclectingWidget(FilterProvider.glutenFree),
             seclectingWidget(FilterProvider.vegetarian),
             seclectingWidget(FilterProvider.vegan),

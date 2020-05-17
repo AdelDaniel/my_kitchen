@@ -8,6 +8,7 @@ import '../models/meal_model.dart';
 ///PROVIDRRS 
 import 'package:provider/provider.dart';
 import '../provider/star_provider.dart';
+import '../provider/filter_provider.dart';
 
 class StarMealsScreen extends StatelessWidget {
 
@@ -17,8 +18,14 @@ class StarMealsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    FilterProvider filterProvider = Provider.of<FilterProvider>(context,listen: true); 
     final StarMeals starMealsProvider = Provider.of<StarMeals>(context);
-    final List<Meal> starMeals =starMealsProvider.getStarMeals ;
+    
+    ///get star meals and filter it   
+    final List<Meal> starMeals =starMealsProvider.getStarMeals.where((meal){
+      return filterProvider.filtterOneMeal(meal);
+    }).toList();
+
     if(starMeals.isEmpty){
       return Center(child : Text('NO Stared Meals'),) ;
     }else{
@@ -27,7 +34,7 @@ class StarMealsScreen extends StatelessWidget {
         itemCount: starMeals.length,
         itemBuilder: (ctx ,index)
         {
-          return MealItem(starMeals[index]);
+          return MealItem(starMeals[index]) ;
         },
        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 400 ,

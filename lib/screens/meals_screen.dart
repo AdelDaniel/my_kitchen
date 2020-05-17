@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:my_kitchen/provider/filter_provider.dart';
+import '../provider/filter_provider.dart';
+import '../widgets/drawer.dart';
 import 'package:provider/provider.dart';
 
 
@@ -38,6 +39,7 @@ class _MealsScreenState extends State<MealsScreen> {
 
 
     return Scaffold(
+      drawer: MyDrawer(),
       appBar: AppBar(
         backgroundColor: currentCategory['color'],
         title: Text( currentCategory['title']),
