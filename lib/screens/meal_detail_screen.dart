@@ -228,8 +228,6 @@ class MealDetail extends StatelessWidget {
                         height: md.height * 0.45 - 55,
 
                         child: ListWheelScrollView(
-                          useMagnifier: true,
-                          magnification: 1.1,
                           clipToSize: true,
                           itemExtent: 110, 
                           children: currentMeal.steps.map((step) {

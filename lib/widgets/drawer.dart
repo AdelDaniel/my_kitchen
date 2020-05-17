@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../screens/filtter_screen.dart';
 import '../provider/filter_provider.dart';
-import 'package:flutter/cupertino.dart';
 
 class MyDrawer extends StatefulWidget {
   @override
@@ -93,10 +93,9 @@ class _MyDrawerState extends State<MyDrawer> {
                   width: 95,
                   child: FloatingActionButton.extended(
                     onPressed: () {
-
                       Provider.of<FilterProvider>(context, listen: false)
                           .setSelections(_selections);
-                          Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                     label: Text('Save'),
                     backgroundColor: Colors.blue,
